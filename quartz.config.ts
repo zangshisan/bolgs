@@ -8,16 +8,18 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
+    pageTitle: "璋十三",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    locale: "zh-CN",
+    baseUrl: "https://zangshisan.github.io/bolgs/",
     ignorePatterns: ["private", "templates", ".obsidian"],
+     // 忽略列表。这些文件夹里的笔记**不会**发布到网站上。
+     // 👉 如果你有“草稿箱”或“私人日记”文件夹，加到这里
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
