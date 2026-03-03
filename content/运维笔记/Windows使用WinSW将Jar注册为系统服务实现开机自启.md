@@ -121,24 +121,24 @@
 
 ### 安装服务
 
-[服务名称].exe install
+`[服务名称].exe install`
 
 ### 启动服务
 
-[服务名称].exe start
+`[服务名称].exe start`
 
 ### 停止服务
 
-[服务名称].exe stop
+`[服务名称].exe stop`
 
 ### 卸载服务
 
-[服务名称].exe uninstall
+`[服务名称].exe uninstall`
 
 ### 查看服务状态
 
-sc query [服务名称]
+`sc query [服务名称]`
 
 ### 删除服务
 
-sc delete [服务名称]
+`sc delete [服务名称]`

@@ -19,7 +19,7 @@
 |`koi-utf` / `koi-win` / `win-utf`|早期俄语/Windows 字符集映射文件。|历史遗留，现代环境可忽略。|
 
 ## 相关命令
-```
+```nginx
 # 立即启动  
 sudo systemctl start nginx   
  #开机自启  
