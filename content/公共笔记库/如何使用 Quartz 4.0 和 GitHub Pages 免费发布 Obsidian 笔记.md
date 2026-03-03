@@ -8,6 +8,9 @@ Git（使用 git --version 检查您的版本）
 Obsidian
 ```
 `
+> [!info]- 2026/03/02 更新
+> nodeb版本 v22+
+
 ##### 步骤 1. 下载并安装 Quartz
 
 - 打开终端并运行以下命令
@@ -27,6 +30,7 @@ npx quartz create
 
 -  选择初始化选项
 ```
+# 全部回车默认就好了。
 - Empty Quartz
 - Copy an existing folder
 - Symlink an existing folder
@@ -42,6 +46,7 @@ You're all set! Not sure what to try next? Try:
 # 设置完成
 
 ```
+
 
 ##### 步骤 2. 设置 GitHub 存储库
 
@@ -125,15 +130,68 @@ jobs:
 - 点击右侧菜单Pages>Source 下拉菜单，选择 GitHub Actions
 - 最后提交更改，网站将部署到 `<github-username>.github.io/<repository-name>`
 
+> [!info]- 2026/03/02 配置更新-手动搜索更新下-或用下面完整版
+> uses: actions/checkout@v3 ---> uses: actions/checkout@v4
+> uses: actions/setup-node@v3 ---> uses: actions/setup-node@v4
+> node-version: 18.14 ---> node-version: 22
+> uses: actions/upload-pages-artifact@v2 --->  uses: actions/upload-pages-artifact@v3
+> uses: actions/deploy-pages@v2 --->  uses: actions/deploy-pages@v4
+
+> [!tip] 懒人版本：复制粘贴即可
+```
+name: Deploy Quartz site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - v4
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for git info
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Quartz
+        run: npx quartz build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
 ```
 npx quartz sync   # 每次更改后记得更新推送到远程仓库上
 ```
 
-> [!NOTE] ：说明：
-> 笔记参考： [如何使用 Quartz 4.0 和 GitHub Pages 免费发布 Obsidian 笔记]( https://insile.github.io/my-notes/%E7%AC%94%E8%AE%B0/%E5%85%AC%E5%85%B1%E7%AC%94%E8%AE%B0%E5%BA%93/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Quartz-4.0-%E5%92%8C-GitHub-Pages-%E5%85%8D%E8%B4%B9%E5%8F%91%E5%B8%83-Obsidian-%E7%AC%94%E8%AE%B0)
-> 只是在这篇文章稍加注释，因为遇到了些许坑。本文章修改原文部分内容。
-> 
-> 相关Obsidian文章参考：
+> [!NOTE] ：相关Obsidian文章参考：
+>
 > - [推荐一款强大的笔记管理软件：Obsidian](https://zhuanlan.zhihu.com/p/668713110)
 >  - [Obsidian快速上手指南-免费的markdown双链笔记软件](https://zhuanlan.zhihu.com/p/682396800)
 >  - [Obsidian中有哪些好用的插件值得推荐？](https://www.zhihu.com/question/497487995/answer/3445481654)
